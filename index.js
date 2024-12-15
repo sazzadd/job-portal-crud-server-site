@@ -112,6 +112,22 @@ async function run() {
       const result = await jobApplicationCollection.find(query).toArray();
       res.send(result);
     });
+    app.patch("/job-applications/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body;
+
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: data.status,
+        },
+      };
+      const result = await jobApplicationCollection.updateOne(
+        filter,
+        updatedDoc
+      );
+      res.send(result);
+    });
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
