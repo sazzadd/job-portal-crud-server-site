@@ -9,7 +9,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://job-portal-site87.surge.sh"],
     credentials: true,
   })
 );
@@ -22,6 +22,7 @@ const logger = (req, res, next) => {
 const verifyToken = (req, res, next) => {
   console.log("inside verify token midleware.cookies", req.cookies);
   const token = req?.cookies?.token;
+  console.log(token)
   if (!token) {
     return res.status(401).send({ massage: "unauthorized access" });
   }
